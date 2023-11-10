@@ -99,7 +99,7 @@ export const httpGetProductById = async (
   res: express.Response
 ) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     const product = await getProductById(id);
     return res.status(200).json(product).end();
   } catch (err) {

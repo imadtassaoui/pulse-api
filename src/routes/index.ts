@@ -4,6 +4,7 @@ import login from "./login";
 import getProducts from "./products/getProducts";
 import create from "./products/create";
 import product from "./products/product";
+import addToCart from "./cart/addToCart";
 
 const router = Router();
 
@@ -14,5 +15,7 @@ export default (): Router => {
   getProducts(router);
   product(router);
   create(router);
+  //cart routes
+  addToCart(router);
   return router;
 };

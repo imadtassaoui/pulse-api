@@ -45,3 +45,5 @@ mongoose.connection.on("error", (err: Error) => {
 });
 
 app.use("/", router());
+
+export default app;

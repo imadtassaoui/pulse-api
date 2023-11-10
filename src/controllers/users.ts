@@ -32,21 +32,22 @@ export const login = async (req: express.Request, res: express.Response) => {
       path: "/",
     });
 
-    res.sendStatus(200).json(user).end();
+    res.status(200).json(user.authentication.sessionToken).end();
   } catch (err) {
-    res.status(400).send("An error occurred");
+    res.status(400).send(err.message);
   }
 };
 
 export const register = async (req: express.Request, res: express.Response) => {
   try {
     const { email, username, password } = req.body;
-    if (!email || !password) throw new Error("Credentials not provided");
+
+    if (!email || !username || !password)
+      throw new Error("Credentials not provided");
 
     const existingUser = await getUserByEmail(email);
-    if (existingUser) {
-      return res.json({ message: "User already exists" });
-    }
+    if (existingUser) throw new Error("User already exists");
+
     const salt = random();
     const user = await createUser({
       email,
@@ -57,9 +58,8 @@ export const register = async (req: express.Request, res: express.Response) => {
       },
     });
 
-    return res.sendStatus(200).json(user).end();
+    return res.status(200).json(user).end();
   } catch (err) {
-    console.error(err);
-    return res.sendStatus(400);
+    return res.status(400).send(err.message);
   }
 };
