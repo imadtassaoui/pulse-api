@@ -29,3 +29,9 @@ export const deleteUser = async (id: string) => {
 export const updateUser = async (id: string, user: Record<string, any>) => {
   return await UserModel.findByIdAndUpdate({ _id: id }, user);
 };
+
+export const verifySessionToken = async (sessionToken: string) => {
+  return await UserModel.findOne({
+    "authentication.sessionToken": sessionToken,
+  });
+};

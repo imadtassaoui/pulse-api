@@ -1,3 +1,4 @@
+import { verifySessionToken } from "./../models/users";
 import { authentication, random } from "../helpers/index";
 import express from "express";
 import {
@@ -49,17 +50,38 @@ export const register = async (req: express.Request, res: express.Response) => {
     if (existingUser) throw new Error("User already exists");
 
     const salt = random();
+
     const user = await createUser({
       email,
       username,
       authentication: {
         salt,
         password: authentication(salt, password),
+        sessionToken: authentication(salt, email),
       },
     });
 
-    return res.status(200).json(user).end();
+    return res.status(200).json(user.authentication.sessionToken).end();
   } catch (err) {
     return res.status(400).send(err.message);
+  }
+};
+
+export const verifySession = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { sessionToken } = req.body;
+
+    if (!sessionToken) throw new Error("Unauthorized: Missing session token");
+
+    const user = await verifySessionToken(sessionToken);
+
+    if (!user) throw new Error("Unauthorized: Invalid session token");
+
+    res.status(200).send("Valid Token").end();
+  } catch (err) {
+    return res.status(401).send(err.message);
   }
 };
