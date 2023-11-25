@@ -6,6 +6,7 @@ import create from "./products/create";
 import product from "./products/product";
 import addToCart from "./cart/addToCart";
 import token from "./token";
+import search from "./products/search";
 
 const router = Router();
 
@@ -17,6 +18,7 @@ export default (): Router => {
   getProducts(router);
   product(router);
   create(router);
+  search(router);
   //cart routes
   addToCart(router);
   return router;

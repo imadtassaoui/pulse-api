@@ -28,3 +28,8 @@ export const getProductsByGenderAndCategory = async (
 export const getProductById = async (id: string) => {
   return await ProductModel.findById(id);
 };
+
+export const searchProducts = async (keyword: string) => {
+  const query = { $text: { $search: keyword } };
+  return await ProductModel.find(query);
+};

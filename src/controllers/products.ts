@@ -5,6 +5,7 @@ import {
   getProductsByCategory,
   getProductsByGender,
   getProductsByGenderAndCategory,
+  searchProducts,
 } from "./../models/products";
 import express from "express";
 
@@ -102,6 +103,19 @@ export const httpGetProductById = async (
     const { id } = req.params;
     const product = await getProductById(id);
     return res.status(200).json(product).end();
+  } catch (err) {
+    return res.status(400).send(err.message);
+  }
+};
+
+export const httpSearchProducts = async (
+  req: express.Request,
+  res: express.Response
+) => {
+  try {
+    const { keyword } = req.params;
+    const products = await searchProducts(keyword);
+    return res.status(200).json(products).end();
   } catch (err) {
     return res.status(400).send(err.message);
   }
