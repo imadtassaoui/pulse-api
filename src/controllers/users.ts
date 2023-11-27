@@ -74,11 +74,11 @@ export const verifySession = async (
   try {
     const { sessionToken } = req.body;
 
-    if (!sessionToken) return res.status(404).send("Token not found").end();
+    if (!sessionToken) throw new Error("Unauthorized: Missing session token");
 
     const user = await verifySessionToken(sessionToken);
 
-    if (!user) return res.status(404).send("User not found").end();
+    if (!user) throw new Error("Unauthorized: Invalid session token");
 
     res.status(200).send("Valid Token").end();
   } catch (err) {
