@@ -12,6 +12,10 @@ export const getUserByEmail = async (email: string) => {
   return await UserModel.findOne({ email });
 };
 
+export const getUserByToken = async (token: string) => {
+  return await UserModel.findOne({ "authentication.sessionToken": token });
+};
+
 export const getUserByEmailSelected = async (email: string) => {
   return await UserModel.findOne({ email }).select(
     "+authentication.salt +authentication.password"

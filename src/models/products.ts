@@ -33,3 +33,7 @@ export const searchProducts = async (keyword: string) => {
   const query = { $text: { $search: keyword } };
   return await ProductModel.find(query);
 };
+
+export const getProductPrice = async (id: string) => {
+  return await ProductModel.findById(id).select("price");
+};

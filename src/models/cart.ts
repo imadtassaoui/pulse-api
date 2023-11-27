@@ -20,6 +20,12 @@ export const deleteCartItem = async (itemtId: string, userId: string) => {
   );
 };
 
+export const getCartItemQuantity = async (itemId: string, userId: string) => {
+  const cart = await getCartByUserId(userId);
+  const item = cart?.items.find((item) => item._id.toString() === itemId);
+  return item?.quantity;
+};
+
 export const updateCartItem = async (
   itemId: string,
   userId: string,
