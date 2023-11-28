@@ -11,7 +11,7 @@ import mongoose from "mongoose";
 // httpGetCartController
 export const httpGetCart = async (req: Request, res: Response) => {
   try {
-    const { token } = req.body;
+    const token = req.headers.authorization?.split("Bearer ")[1];
 
     const { _id } = await getUserByToken(token);
 
@@ -35,7 +35,9 @@ export const httpGetCart = async (req: Request, res: Response) => {
 // httpAddToCart
 export const httpAddToCart = async (req: Request, res: Response) => {
   try {
-    const { token, productId, size, quantity } = req.body;
+    const token = req.headers.authorization?.split("Bearer ")[1];
+
+    const { productId, size, quantity } = req.body;
 
     const { _id } = await getUserByToken(token);
 
@@ -98,7 +100,9 @@ export const httpAddToCart = async (req: Request, res: Response) => {
 
 export const httpRemoveFromCart = async (req: Request, res: Response) => {
   try {
-    const { token, productId, size } = req.body;
+    const token = req.headers.authorization?.split("Bearer ")[1];
+
+    const { productId, size } = req.body;
 
     const { _id } = await getUserByToken(token);
 
@@ -141,7 +145,9 @@ export const httpUpdateCartElementQuantity = async (
   res: Response
 ) => {
   try {
-    const { token, productId, size, quantity } = req.body;
+    const token = req.headers.authorization?.split("Bearer ")[1];
+
+    const { productId, size, quantity } = req.body;
 
     const { _id } = await getUserByToken(token);
     if (!_id) {
@@ -186,7 +192,9 @@ export const httpIncreaseCartElementQuantity = async (
   res: Response
 ) => {
   try {
-    const { token, productId, size } = req.body;
+    const token = req.headers.authorization?.split("Bearer ")[1];
+
+    const { productId, size } = req.body;
 
     const { _id } = await getUserByToken(token);
 
@@ -233,7 +241,9 @@ export const httpDecreaseCartElementQuantity = async (
   res: Response
 ) => {
   try {
-    const { token, productId, size } = req.body;
+    const token = req.headers.authorization?.split("Bearer ")[1];
+
+    const { productId, size } = req.body;
 
     const { _id } = await getUserByToken(token);
 
